@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
             <div class="row">
                 <div class="col-lg-6">
-                    <?= $form->field($model, 'light_source')->dropDownList([0 => AC, 1 => DC]) ?>
+                    <?= $form->field($model, 'light_source')->dropDownList([0 => 'AC', 1 => 'DC']) ?>
                 </div>
                 <div class="col-lg-6">
                     <?= $form->field($model, 'warranty')->textInput(['maxlength' => true]) ?>
