@@ -17,10 +17,10 @@ use yii\widgets\ActiveForm;
             <?php $form = ActiveForm::begin(); ?>
             <div class="row">
                 <div class="col-lg-6">
-                    <?= $form->field($model, 'controller_id')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'region_id')->dropDownList(\yii\helpers\ArrayHelper::map(backend\models\Region::find()->all(), 'id', 'name')); ?>
                 </div>
                 <div class="col-lg-6">
-                    <?= $form->field($model, 'type')->textInput() ?>
+                    <?= $form->field($model, 'controller_id')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
 
