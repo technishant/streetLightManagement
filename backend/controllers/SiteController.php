@@ -1,5 +1,4 @@
 <?php
-
 namespace backend\controllers;
 
 use Yii;
@@ -26,7 +25,7 @@ class SiteController extends Controller {
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'dashboard'],
+                        'actions' => ['logout', 'dashboard', 'start-server', 'stop-server'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -66,7 +65,7 @@ class SiteController extends Controller {
             return $this->redirect('dashboard');
         } else {
             return $this->render('login', [
-                        'model' => $model,
+                        'model' => $model,  
             ]);
         }
     }
@@ -76,9 +75,22 @@ class SiteController extends Controller {
 
         return $this->goHome();
     }
-    
+
     public function actionDashboard() {
         $this->layout = "dashboard";
         return $this->render('dashboard');
     }
+    
+    public function actionStartServer() {
+        $server = IoServer::factory(new Test(), 8080);
+        $server->run();
+    }
+    
+    public function actionStopServer() {
+        $server = new StreetServer('localhost', 5000, 20);
+        print_r($server); die;
+        $server->stop();
+    }
+    
+
 }

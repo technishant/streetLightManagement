@@ -1,7 +1,9 @@
 <?php
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'bootstrap' => ['log', 'nodeSocket'],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -16,5 +18,9 @@ return [
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
         ],
+//        'aliases' => [
+//            '@YiiNodeSocket' => '@vendor/oncesk/yii-node-socket/lib/php',
+//            '@nodeWeb' => '@vendor/oncesk/yii-node-socket/lib/js'
+//        ],
     ],
 ];
