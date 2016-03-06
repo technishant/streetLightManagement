@@ -21,6 +21,8 @@ use Yii;
  * @property string $contact_2_name
  * @property string $contact_2_phone
  * @property string $contact_2_email
+ * @property integer $status
+ * @property string $server_id
  * @property string $created
  *
  * @property TblDeviceLogs[] $tblDeviceLogs
@@ -44,9 +46,11 @@ class Devices extends \yii\db\ActiveRecord
     {
         return [
             [['region_id', 'controller_id', 'sim_number', 'imei_number'], 'required'],
-            [['region_id', 'controller_id', 'type'], 'integer'],
+            [['region_id', 'controller_id', 'type', 'status'], 'integer'],
             [['created'], 'safe'],
-            [['latitude', 'longitude', 'sim_number', 'imei_number', 'contact_1_name', 'contact__1_phone', 'contact_1_email', 'contact_2_name', 'contact_2_phone', 'contact_2_email'], 'string', 'max' => 255]
+            [['latitude', 'longitude', 'sim_number', 'imei_number', 'contact_1_name', 'contact__1_phone', 'contact_1_email', 'contact_2_name', 'contact_2_phone', 'contact_2_email'], 'string', 'max' => 255],
+            [['server_id'], 'string', 'max' => 45],
+            [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
         ];
     }
 
@@ -70,6 +74,8 @@ class Devices extends \yii\db\ActiveRecord
             'contact_2_name' => 'Contact 2 Name',
             'contact_2_phone' => 'Contact 2 Phone',
             'contact_2_email' => 'Contact 2 Email',
+            'status' => 'Status',
+            'server_id' => 'Server ID',
             'created' => 'Created',
         ];
     }
