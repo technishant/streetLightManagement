@@ -15,7 +15,7 @@ class Socket
 	protected $context = null;
 	protected $ssl = false;
 
-	public function __construct($host = '52.89.229.139', $port = 6000, $ssl = false)
+	public function __construct($host = '127.0.0.1', $port = 8000, $ssl = false)
     {
         ob_implicit_flush(true);
 		$this->ssl = $ssl;
@@ -30,7 +30,7 @@ class Socket
      */
 	private function createSocket($host, $port)
 	{
-		$protocol = ($this->ssl === true) ? 'tls://' : 'tcp://';
+		$protocol = ($this->ssl === true) ? 'tcp://' : 'tls://';
 		$url = $protocol.$host.':'.$port;
 		$this->context = stream_context_create();
 		if($this->ssl === true)

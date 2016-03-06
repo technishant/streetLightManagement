@@ -26,7 +26,7 @@ class StreetLightServer {
     public $server;
 
     public function __construct() {
-        $this->server = new Server('52.89.229.139', 6000, false);
+        $this->server = new Server('52.89.229.139', 8000, false);
         $this->server->setMaxClients(100);
         $this->server->setCheckOrigin(false);
         $this->server->setAllowedOrigin('192.168.1.153');

@@ -18,10 +18,10 @@ class Server extends Socket
 	private $_maxRequestsPerMinute = 5000;
 	private $_hook;
 	
-    public function __construct($host = '52.89.229.139', $port = 6000, $ssl = false)
+    public function __construct($host = '127.0.0.1', $port = 8000, $ssl = false)
     {
         parent::__construct($host, $port, $ssl);
-        $this->log('Server started listening to port'.$port);
+        $this->log('Server started listening to port 8000');
     }
 
     /**
