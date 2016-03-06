@@ -24,6 +24,8 @@ class LoginAsset extends AssetBundle
     public $js = [
         'js/jquery.js',
         'js/bootstrap.min.js',
+        'js/custom.js',
+        'js/maps.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

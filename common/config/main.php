@@ -17,10 +17,6 @@ return [
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
-        ],
-//        'aliases' => [
-//            '@YiiNodeSocket' => '@vendor/oncesk/yii-node-socket/lib/php',
-//            '@nodeWeb' => '@vendor/oncesk/yii-node-socket/lib/js'
-//        ],
+        ]
     ],
 ];

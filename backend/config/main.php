@@ -26,19 +26,7 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
-        ],
-        'nodeSocket' => [
-            'class' => '\YiiNodeSocket\NodeSocket',
-            'host' => 'localhost',
-            'allowedServerAddresses' => [
-                "localhost",
-                "127.0.0.1"
-            ],
-            'origin' => '*:*',
-            'sessionVarName' => 'PHPSESSID',
-            'port' => 3001,
-            'socketLogFile' => '/var/log/node-socket.log',
-        ],
+        ]
     ],
     'params' => $params,
 ];
