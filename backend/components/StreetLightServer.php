@@ -108,12 +108,12 @@ class StreetLightServer {
 
     public function decodeData($connection_id, $data) {
         if (strlen($data) == 14) {
-            echo "\nGood Data From $connection_id :" . bindec($data);
+            echo "\nGood Data From $connection_id :" . bin2hex($data);
             echo "\n";
             var_dump($data);
             
         } else {
-            echo "\nBad Data From $connection_id :" . bindec($data);
+            echo "\nBad Data From $connection_id :" . bin2hex($data);
             echo "\n";
             var_dump($data);
             $data = 404;
