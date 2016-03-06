@@ -5,7 +5,9 @@ namespace backend\components;
 include_once 'Connection.php';
 include_once 'Server.php';
 include_once 'Socket.php';
+
 use backend\models\Devices;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,10 +20,10 @@ use backend\models\Devices;
  * @author Nishant Goel
  */
 class StreetLightServer {
-    
+
     const BAD_DATA = 0;
     const DATA_RECEIVED_LOGGED = 1;
-    
+
     private $connections = array(); // Array to save 
     public $server;
 
@@ -47,13 +49,13 @@ class StreetLightServer {
     /* Fired when a socket disconnected */
 
     public function onDisconnect($connection_id) {
-        
+
         $device = Devices::find()->where(['server_id' => $connection_id])->one();
-        if(!empty($device)) {
+        if (!empty($device)) {
             $device->status = 0;
             $device->save();
         }
-        
+
 
         if (isset($this->connections[$connection_id])) {
             unset($this->connections[$connection_id]);
@@ -63,8 +65,8 @@ class StreetLightServer {
     /* Fired when data received */
 
     public function onDataReceive($connection_id, $data) {
-        
-        echo "\nData received from $connection_id :".$data;
+
+        echo "\nData received from $connection_id :" . $data;
         $this->decodeData($connection_id, $data);
 
         if (isset($data['action'])) {
@@ -103,15 +105,23 @@ class StreetLightServer {
             }
         }
     }
-    
+
     public function decodeData($connection_id, $data) {
-        if(strlen($data) == 14) {
-            echo "\nGood Data From $connection_id :".$data;
+        if (strlen($data) == 14) {
+            echo "\nGood Data From $connection_id :" . $this->hex2ascii($data);
         } else {
-            echo "\nBad Data From $connection_id :".$data;
+            echo "\nBad Data From $connection_id :" . $data;
             $data = 404;
             $this->sendDataToConnection($connection_id, "BAD DATA", $data);
         }
+    }
+
+    public function hex2ascii($str) {
+        $p = '';
+        for ($i = 0; $i < strlen($str); $i = $i + 2) {
+            $p .= chr(hexdec(substr($str, $i, 2)));
+        }
+        return $p;
     }
 
 }
