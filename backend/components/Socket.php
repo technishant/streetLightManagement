@@ -15,7 +15,7 @@ class Socket
 	protected $context = null;
 	protected $ssl = false;
 
-	public function __construct($host = 'localhost', $port = 8000, $ssl = false)
+	public function __construct($host = '52.89.229.139', $port = 6000, $ssl = false)
     {
         ob_implicit_flush(true);
 		$this->ssl = $ssl;
