@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
@@ -6,6 +7,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
+use backend\models\Devices;
 
 /**
  * Site controller
@@ -25,7 +27,7 @@ class SiteController extends Controller {
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'dashboard', 'start-server', 'stop-server'],
+                        'actions' => ['logout', 'dashboard', 'load-devices-on-map'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -65,7 +67,7 @@ class SiteController extends Controller {
             return $this->redirect('dashboard');
         } else {
             return $this->render('login', [
-                        'model' => $model,  
+                        'model' => $model,
             ]);
         }
     }
@@ -80,17 +82,18 @@ class SiteController extends Controller {
         $this->layout = "dashboard";
         return $this->render('dashboard');
     }
-    
+
+    public function actionLoadDevicesOnMap() {
+        if(Yii::$app->request->isAjax) {
+            $model = Devices::find()->all();
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return $model;
+        }
+    }
+
     public function actionStartServer() {
-        $server = IoServer::factory(new Test(), 8080);
-        $server->run();
+        $server = new streetLightClientHandler("127.0.0.1", "5000");
+        echo "The server has been started.";
     }
-    
-    public function actionStopServer() {
-        $server = new StreetServer('localhost', 5000, 20);
-        print_r($server); die;
-        $server->stop();
-    }
-    
 
 }
