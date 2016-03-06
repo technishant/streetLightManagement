@@ -28,9 +28,6 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/jquery.js',
         'js/bootstrap.min.js',
-        'js/plugins/morris/raphael.min.js',
-        'js/plugins/morris/morris.min.js',
-        'js/plugins/morris/morris-data.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
