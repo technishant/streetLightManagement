@@ -46,7 +46,7 @@ class Devices extends \yii\db\ActiveRecord
     {
         return [
             [['region_id', 'controller_id', 'sim_number', 'imei_number'], 'required'],
-            [['region_id', 'controller_id', 'type', 'status'], 'integer'],
+            [['region_id', 'type', 'status'], 'integer'],
             [['created'], 'safe'],
             [['latitude', 'longitude', 'sim_number', 'imei_number', 'contact_1_name', 'contact__1_phone', 'contact_1_email', 'contact_2_name', 'contact_2_phone', 'contact_2_email'], 'string', 'max' => 255],
             [['server_id'], 'string', 'max' => 45],

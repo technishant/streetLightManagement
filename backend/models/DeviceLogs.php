@@ -37,7 +37,7 @@ class DeviceLogs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            //[['region_id', 'device_id', 'current_voltage', 'current_load', 'voltage_status', 'power_status', 'controller_data_status', 'light_status'], 'required'],
+            [['region_id', 'device_id', 'current_voltage', 'current_load', 'voltage_status', 'power_status', 'controller_data_status', 'light_status'], 'required'],
             [['region_id', 'device_id', 'voltage_status', 'power_status', 'controller_data_status', 'light_status'], 'integer'],
             [['current_voltage', 'current_load'], 'number'],
             [['created'], 'safe']
