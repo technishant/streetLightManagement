@@ -122,8 +122,11 @@ class StreetLightServer {
                 if ($deviceJunk->save()) {
                     echo "Data Logged";
                 } else {
-                    echo "Data not logged";
-                }
+                    $a= $deviceJunk->getErrors();
+                    foreach ($a as  $key => $value) {
+                        echo $key." - ".$value;
+                    }
+                 }
 //                $deviceModel->server_id = $connection_id;
 //                $deviceModel->status = 1;
 //                if($deviceModel->save()) {
