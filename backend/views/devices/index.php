@@ -22,27 +22,27 @@ $this->params['breadcrumbs'][] = $this->title;
             GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+                'layout'=>"{items}\n{pager}",
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    //'region_id',
                     'controller_id',
-                    //'type',
-                    //'latitude',
-                    // 'longitude',
-                     'sim_number',
-                     'imei_number',
+                    'sim_number',
+                    'imei_number',
                     'contact_1_name',
-                    // 'contact__1_phone',
-                    // 'contact_1_email:email',
-                    'contact_2_name',
-                    // 'contact_2_phone',
-                    // 'contact_2_email:email',
-                    // 'created',
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]);
-            ?>
-
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'template' => '{view}{update}{delete}{junk}',
+                        'buttons' => [
+                            'junk' => function($url, $model, $key) {
+                                return Html::a('<span class="glyphicon glyphicon-th-list"></span>', \yii\helpers\Url::toRoute([junk, 'device_id' => $key]), [
+                                            'title' => Yii::t('app', 'Info'),
+                                ]);
+                            }
+                                ]
+                            ],
+                        ],
+                    ]);
+                    ?>
         </div>
     </div>
 </div>
