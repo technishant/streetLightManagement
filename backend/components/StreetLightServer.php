@@ -7,6 +7,7 @@ include_once 'Server.php';
 include_once 'Socket.php';
 
 use backend\models\Devices;
+use backend\models\DeviceLogs;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,7 +29,7 @@ class StreetLightServer {
     public $server;
 
     public function __construct() {
-        $this->server = new Server('ec2-52-89-229-139.us-west-2.compute.amazonaws.com', 5005, false);
+        $this->server = new Server('127.0.0.1', 5005, false);
         $this->server->setMaxClients(100);
         $this->server->setCheckOrigin(false);
         $this->server->setAllowedOrigin('192.168.1.153');
@@ -55,7 +56,6 @@ class StreetLightServer {
             $device->status = 0;
             $device->save();
         }
-
 
         if (isset($this->connections[$connection_id])) {
             unset($this->connections[$connection_id]);
@@ -107,11 +107,40 @@ class StreetLightServer {
     }
 
     public function decodeData($connection_id, $data) {
-        if (strlen($data) == 14) {
-            echo "\nGood Data From $connection_id :" . bin2hex($data);
-            echo "\n";
-            var_dump($data);
-            
+
+        if (strlen($data) == 22) {
+            echo "Data Received \n";
+            $data = strtolower(bin2hex($data));
+            $data = trim($data);
+            echo $data . "\n";
+            $deviceModel = Devices::find()->where(['controller_id' => substr($data, 3, 6)])->one();
+            if (!empty($deviceModel)) {
+                $deviceJunk = new \backend\models\DeviceJunk;
+                $deviceJunk->region_id = $deviceModel->region_id;
+                $deviceJunk->device_id = $deviceModel->id;
+                $deviceJunk->device_data = $data;
+                if ($deviceJunk->save()) {
+                    echo "Data Logged";
+                } else {
+                    echo "Data not logged";
+                }
+//                $deviceModel->server_id = $connection_id;
+//                $deviceModel->status = 1;
+//                if($deviceModel->save()) {
+//                    $logModel = new DeviceLogs;
+//                    $logModel->region_id = $deviceModel->region_id;
+//                    $logModel->device_id = $deviceModel->id;
+//                    $logModel->current_voltage = substr($data, 10, 2);
+//                    $logModel->current_load = substr($data, 12, 2);
+//                    $logModel->voltage_status = 0;
+//                    $logModel->power_status = 0;
+//                    $logModel->controller_data_status = 0;
+//                    $logModel->light_status = 0;
+//                    $logModel->save();
+//                }
+            } else {
+                echo "\nNo device found with id :" . substr($data, 3, 6);
+            }
         } else {
             echo "\nBad Data From $connection_id :" . bin2hex($data);
             echo "\n";

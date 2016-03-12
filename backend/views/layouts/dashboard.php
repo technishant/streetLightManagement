@@ -7,7 +7,6 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use yii\helpers\Url;
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
