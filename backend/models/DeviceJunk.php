@@ -27,7 +27,7 @@ class DeviceJunk extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['id', 'region_id', 'device_id'], 'required'],
+            [['region_id', 'device_id'], 'required'],
             [['id', 'region_id', 'device_id'], 'integer'],
             [['device_data'], 'string'],
             [['created'], 'safe'],
