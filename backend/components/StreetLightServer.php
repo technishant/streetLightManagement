@@ -117,7 +117,7 @@ class StreetLightServer {
             $deviceJunk = new \backend\models\DeviceJunk;
             $deviceJunk->region_id = 1;
             $deviceJunk->device_id = 1;
-            $deviceJunk->device_data = $junkData
+            $deviceJunk->device_data = $junkData;
             $deviceJunk->save();
             $deviceModel = Devices::find()->where(['controller_id' => substr($data, 2, 6)])->one();
             if (!empty($deviceModel)) {
