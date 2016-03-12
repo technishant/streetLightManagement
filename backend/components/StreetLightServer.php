@@ -110,13 +110,14 @@ class StreetLightServer {
 
         if (strlen($data) == 11) {
             echo "Data Received \n";
+            $junkData = $data;
             $data = strtolower(bin2hex($data));
             $data = trim($data);
             echo $data . "\n";
             $deviceJunk = new \backend\models\DeviceJunk;
             $deviceJunk->region_id = 1;
             $deviceJunk->device_id = 1;
-            $deviceJunk->device_data = $data;
+            $deviceJunk->device_data = $junkData
             $deviceJunk->save();
             $deviceModel = Devices::find()->where(['controller_id' => substr($data, 2, 6)])->one();
             if (!empty($deviceModel)) {
