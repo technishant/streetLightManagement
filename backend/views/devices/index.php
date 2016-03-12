@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{view}{update}{delete}{junk}',
                         'buttons' => [
                             'junk' => function($url, $model, $key) {
-                                return Html::a('<span class="glyphicon glyphicon-th-list"></span>', \yii\helpers\Url::toRoute([junk, 'device_id' => $key]), [
+                                return Html::a('<span class="glyphicon glyphicon-th-list"></span>', \yii\helpers\Url::toRoute(['junk', 'device_id' => $key]), [
                                             'title' => Yii::t('app', 'Info'),
                                 ]);
                             }
