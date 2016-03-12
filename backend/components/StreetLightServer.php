@@ -113,7 +113,7 @@ class StreetLightServer {
             $data = strtolower(bin2hex($data));
             $data = trim($data);
             echo $data . "\n";
-            $deviceModel = Devices::find()->where(['controller_id' => substr($data, 3, 6)])->one();
+            $deviceModel = Devices::find()->where(['controller_id' => substr($data, 2, 6)])->one();
             if (!empty($deviceModel)) {
                 $deviceJunk = new \backend\models\DeviceJunk;
                 $deviceJunk->region_id = $deviceModel->region_id;
@@ -139,7 +139,7 @@ class StreetLightServer {
 //                    $logModel->save();
 //                }
             } else {
-                echo "\nNo device found with id :" . substr($data, 3, 6);
+                echo "\nNo device found with id :" . substr($data, 2, 6);
             }
         } else {
             echo "\nBad Data From $connection_id :" . bin2hex($data);
