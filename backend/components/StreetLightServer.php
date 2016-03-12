@@ -108,7 +108,7 @@ class StreetLightServer {
 
     public function decodeData($connection_id, $data) {
 
-        if (strlen($data) == 22) {
+        if (strlen($data) == 11) {
             echo "Data Received \n";
             $data = strtolower(bin2hex($data));
             $data = trim($data);
