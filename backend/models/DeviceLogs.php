@@ -16,6 +16,7 @@ use Yii;
  * @property integer $power_status
  * @property integer $controller_data_status
  * @property integer $light_status
+ * @property integer $overload_status
  * @property string $created
  *
  * @property TblDevices $device
@@ -38,7 +39,7 @@ class DeviceLogs extends \yii\db\ActiveRecord
     {
         return [
             [['region_id', 'device_id'], 'required'],
-            [['region_id', 'device_id', 'voltage_status', 'power_status', 'controller_data_status', 'light_status'], 'integer'],
+            [['region_id', 'device_id', 'voltage_status', 'power_status', 'controller_data_status', 'light_status', 'overload_status'], 'integer'],
             [['current_voltage', 'current_load'], 'number'],
             [['created'], 'safe']
         ];
@@ -59,6 +60,7 @@ class DeviceLogs extends \yii\db\ActiveRecord
             'power_status' => 'Power Status',
             'controller_data_status' => 'Controller Data Status',
             'light_status' => 'Light Status',
+            'overload_status' => 'Overload Status',
             'created' => 'Created',
         ];
     }
