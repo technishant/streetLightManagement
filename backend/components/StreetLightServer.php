@@ -170,9 +170,9 @@ class StreetLightServer {
                 $l2 = hexdec(substr($data, 16, 2));
                 $load = ($l1 * 256) + $l2;
                 $status = base_convert(substr($data, 18, 2), 16, 2);
-                $voltage_status = base_convert(substr($string, 0, 2), 2, 10);
-                $light_status = base_convert(substr($string, 2, 2), 2, 10);
-                $overload_staus = base_convert(substr($string, 4, 2), 2, 10);
+                $voltage_status = base_convert(substr($status, 0, 2), 2, 10);
+                $light_status = base_convert(substr($status, 2, 2), 2, 10);
+                $overload_staus = base_convert(substr($status, 4, 2), 2, 10);
                 $deviceLogs = new DeviceLogs;
                 $deviceLogs->region_id = $deviceModel->region_id;
                 $deviceLogs->device_id = $deviceModel->id;
