@@ -74,7 +74,7 @@ class StreetLightServer {
 
         echo "\nData received from $connection_id :" . $data;
         $this->decodeData($connection_id, $data);
-        $this->sendDataToConnection($connection_id, "sas", $data);
+        //$this->sendDataToConnection($connection_id, "sas", $data);
         if (isset($data['action'])) {
             $action = 'action_' . $data['action'];
             if (method_exists($this, $action)) {
