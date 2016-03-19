@@ -30,6 +30,7 @@ class StreetLightServer {
 
     public function __construct() {
         $this->server = new Server('ec2-52-89-229-139.us-west-2.compute.amazonaws.com', 5005, false);
+        //$this->server = new Server('127.0.0.1', 5005, false);
         $this->server->setMaxClients(100);
         $this->server->setCheckOrigin(false);
         $this->server->setAllowedOrigin('192.168.1.153');
@@ -54,7 +55,12 @@ class StreetLightServer {
         $device = Devices::find()->where(['server_id' => $connection_id])->one();
         if (!empty($device)) {
             $device->status = 0;
-            $device->save();
+            $device->server_id = NULL;
+            if ($device->save()) {
+                echo "Device Successfully offlined";
+            } else {
+                echo "Device could not be offlined";
+            }
         }
 
         if (isset($this->connections[$connection_id])) {
@@ -107,56 +113,76 @@ class StreetLightServer {
     }
 
     public function decodeData($connection_id, $data) {
-
-        if (strlen($data) == 11) {
-            echo "Data Received \n";
-            $junkData = $data;
-            $data = strtolower(bin2hex($data));
-            $data = trim($data);
-            echo $data . "\n";
-            $deviceModel = Devices::find()->where(['controller_id' => substr($data, 2, 6)])->one();
-            if (!empty($deviceModel)) {
-                $deviceJunk = new \backend\models\DeviceJunk;
-                $deviceJunk->region_id = $deviceModel->region_id;
-                $deviceJunk->device_id = $deviceModel->id;
-                $deviceJunk->device_data = $data;
-                if ($deviceJunk->save()) {
-                    echo "Data Logged";
+        $data = strtolower(bin2hex($data));
+        $data_array = array_filter(explode("ab", $data));
+        if (!empty($data_array)) {
+            foreach ($data_array as $key => $value) {
+                if (strlen($value) == 20) {
+                    $deviceModel = Devices::find()->where(['controller_id' => substr($value, 0, 6)])->one();
+                    if (!empty($deviceModel)) {
+                        echo "Good Data From $connection_id :" . $data . "\n";
+                        $deviceModel->status = 1;
+                        $deviceModel->server_id = $connection_id;
+                        if ($deviceModel->save()) {
+                            echo "Device Status Saved \n";
+                            $deviceJunk = new \backend\models\DeviceJunk;
+                            $deviceJunk->region_id = $deviceModel->region_id;
+                            $deviceJunk->device_id = $deviceModel->id;
+                            $deviceJunk->device_data = $value;
+                            if ($deviceJunk->save()) {
+                                echo "Device junk data saved on the server \n";
+                                if ($this->decodeCommand($deviceModel->id, $value)) {
+                                    echo "Data Logged";
+                                } else {
+                                    echo "Data Not llogged";
+                                }
+                            } else {
+                                print_r($deviceJunk->getErrors());
+                            }
+                        } else {
+                            print_r($deviceModel->getErrors());
+                        }
+                    } else {
+                        echo "No Device could be found with id : " . substr($value, 0, 6);
+                    }
                 } else {
-                    print_r($deviceJunk->getErrors());
-                 }
-//                $deviceModel->server_id = $connection_id;
-//                $deviceModel->status = 1;
-//                if($deviceModel->save()) {
-//                    $logModel = new DeviceLogs;
-//                    $logModel->region_id = $deviceModel->region_id;
-//                    $logModel->device_id = $deviceModel->id;
-//                    $logModel->current_voltage = substr($data, 10, 2);
-//                    $logModel->current_load = substr($data, 12, 2);
-//                    $logModel->voltage_status = 0;
-//                    $logModel->power_status = 0;
-//                    $logModel->controller_data_status = 0;
-//                    $logModel->light_status = 0;
-//                    $logModel->save();
-//                }
-            } else {
-                echo "\nNo device found with id :" . substr($data, 2, 6);
+                    echo "Bad Data From $connection_id :" . $data . "\n";
+                }
             }
         } else {
-            echo "\nBad Data From $connection_id :" . bin2hex($data);
-            echo "\n";
-            var_dump($data);
-            $data = 404;
-            $this->sendDataToConnection($connection_id, "BAD DATA", $data);
+            echo "No Data Received \n";
         }
     }
 
-    public function hex2ascii($str) {
-        $p = '';
-        for ($i = 0; $i < strlen($str); $i = $i + 2) {
-            $p .= chr(hexdec(substr($str, $i, 2)));
+    public function decodeCommand($deviceId, $data) {
+        $command_id = substr($data, 6, 2);
+        $deviceModel = Devices::find()->where(['id' => $deviceId])->one();
+        switch ($command_id) {
+            case "01":
+                break;
+            case "02":
+                break;
+            case "03":
+                $v1 = hexdec(substr($data, 8, 2));
+                $v2 = hexdec(substr($data, 10, 2));
+                $voltage = ($v1 * 256) + $v2;
+                $l1 = hexdec(substr($data, 14, 2));
+                $l2 = hexdec(substr($data, 16, 2));
+                $load = ($l1 * 256) + $l2;
+                $deviceLogs = new DeviceLogs;
+                $deviceLogs->region_id = $deviceModel->region_id;
+                $deviceLogs->device_id = $deviceModel->id;
+                $deviceLogs->current_voltage = $voltage;
+                $deviceLogs->current_load = $load;
+                if ($deviceLogs->save()) {
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            case "04":
+                break;
         }
-        return $p;
     }
 
 }

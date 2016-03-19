@@ -49,7 +49,7 @@ class Devices extends \yii\db\ActiveRecord
             [['region_id', 'type', 'status'], 'integer'],
             [['created'], 'safe'],
             [['latitude', 'longitude', 'sim_number', 'imei_number', 'contact_1_name', 'contact__1_phone', 'contact_1_email', 'contact_2_name', 'contact_2_phone', 'contact_2_email'], 'string', 'max' => 255],
-            [['server_id'], 'string', 'max' => 45],
+            //[['server_id'], 'string', 'max' => 45],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
         ];
     }
