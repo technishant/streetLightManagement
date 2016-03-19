@@ -160,9 +160,9 @@ class StreetLightServer {
         switch ($command_id) {
             case "01":
                 break;
-            case "02":
-                break;
             case "03":
+                break;
+            case "02":
                 $v1 = hexdec(substr($data, 8, 2));
                 $v2 = hexdec(substr($data, 10, 2));
                 $voltage = ($v1 * 256) + $v2;
@@ -177,6 +177,8 @@ class StreetLightServer {
                 if ($deviceLogs->save()) {
                     return true;
                 } else {
+                    echo "<pre>";
+                    print_r($deviceLogs->getErrors());
                     return false;
                 }
                 break;
