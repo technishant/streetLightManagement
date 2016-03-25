@@ -8,6 +8,8 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
 use backend\models\Devices;
+use backend\models\DeviceLogs;
+use yii\helpers\ArrayHelper;
 
 /**
  * Site controller
@@ -84,10 +86,39 @@ class SiteController extends Controller {
     }
 
     public function actionLoadDevicesOnMap() {
-        if(Yii::$app->request->isAjax) {
+        if (Yii::$app->request->isAjax) {
             $model = Devices::find()->all();
+            $response = array("status" => 1);
+            if (!empty($model)) {
+                $data = array();
+                foreach ($model as $device) {
+                    $temp = array();
+                    $temp['controller_id'] = $device->controller_id;
+                    $temp['latitude'] = $device->latitude;
+                    $temp['longitude'] = $device->longitude;
+                    $temp['sim_number'] = $device->sim_number;
+                    $temp['imei_number'] = $device->imei_number;
+                    $temp['status'] = $device->status;
+                    $deviceLogs = DeviceLogs::find()->where(['device_id' => $device->id])->orderBy(['id' => SORT_DESC])->one();
+                    if (!empty($deviceLogs)) {
+                        $temp['logs'] = [
+                            'current_voltage' => $deviceLogs->current_voltage,
+                            'current_load' => $deviceLogs->current_load,
+                            'voltage_status' => $deviceLogs->voltage_status,
+                            'light_status' => $deviceLogs->light_status,
+                            'overload_status' => $deviceLogs->overload_status
+                        ];
+                    } else {
+                        $temp['logs'] = array();
+                    }
+                    $data[] = $temp;
+                }
+                $response["data"] = $data;
+            } else {
+                $response = array("status" => 0, "data" => array());
+            }
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return $model;
+            return $response;
         }
     }
 
