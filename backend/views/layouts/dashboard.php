@@ -72,6 +72,9 @@ AppAsset::register($this);
                         <li>
                             <a href="<?= Url::to(['devices/index']); ?>"><i class="fa fa-fw fa-edit"></i> Devices</a>
                         </li>
+                        <li>
+                            <a href="<?= Url::to(['site/device-overview']); ?>"><i class="fa fa-fw fa-eye"></i> Device Overview</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->

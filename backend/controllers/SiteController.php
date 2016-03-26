@@ -11,6 +11,7 @@ use backend\models\Devices;
 use backend\models\DeviceLogs;
 use yii\helpers\ArrayHelper;
 use backend\components\Helper;
+use yii\data\ArrayDataProvider;
 
 /**
  * Site controller
@@ -30,7 +31,7 @@ class SiteController extends Controller {
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'dashboard', 'load-devices-on-map'],
+                        'actions' => ['logout', 'dashboard', 'load-devices-on-map', 'device-overview'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -124,9 +125,32 @@ class SiteController extends Controller {
         }
     }
 
-    public function actionStartServer() {
-        $server = new streetLightClientHandler("127.0.0.1", "5000");
-        echo "The server has been started.";
+    public function actionDeviceOverview() {
+        $deviceModel = Devices::find()->all();
+        $this->layout = "dashboard";
+        $response = array();
+        foreach ($deviceModel as $device) {
+            $temp = array();
+            $deviceLogs = DeviceLogs::find()->where(['device_id' => $device->id])->orderBy(['id' => SORT_DESC])->one();
+            $temp['id'] = $device->id;
+            $temp['controller_id'] = $device->controller_id;
+            $temp['sim_number'] = $device->sim_number;
+            $temp['status'] = ($device->status == 1) ? "Online" : "Offline";
+            $temp['current_voltage'] = $deviceLogs->current_voltage;
+            $temp['current_load'] = $deviceLogs->current_load;
+            $temp['voltage_status'] = Helper::voltageStatus($deviceLogs->voltage_status);
+            $temp['light_status'] = Helper::lightStatus($deviceLogs->light_status);
+            $temp['overload_status'] = Helper::overloadStatus($deviceLogs->overload_status);
+            $temp['created'] = date("d-M-Y H:i:s", strtotime($deviceLogs->created));
+            $response[] = $temp;
+        }
+        $dataProvider = new ArrayDataProvider([
+            'key' => 'id',
+            'allModels' => $response
+        ]);
+        return $this->render('deviceOverview', [
+                    'dataProvider' => $dataProvider
+        ]);
     }
 
 }
