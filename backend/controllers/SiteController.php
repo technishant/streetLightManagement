@@ -144,13 +144,15 @@ class SiteController extends Controller {
                 $temp['overload_status'] = Helper::overloadStatus($deviceLogs->overload_status);
                 $temp['created'] = date("d-M-Y H:i:s", strtotime($deviceLogs->created));
             }
-            $dataProvider = new ArrayDataProvider([
-                'key' => 'id',
-                'allModels' => $response
-            ]);
-            return $this->render('deviceOverview', [
-                        'dataProvider' => $dataProvider
-            ]);
+            $response[] = $temp;
         }
+        $dataProvider = new ArrayDataProvider([
+            'key' => 'id',
+            'allModels' => $response
+        ]);
+        return $this->render('deviceOverview', [
+                    'dataProvider' => $dataProvider
+        ]);
     }
-}   
+
+}
