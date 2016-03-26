@@ -29,7 +29,7 @@ class TestController extends Controller {
                     } else {
                         print_r($device);
                     }
-                } else if (strtotime(date("Y-m-d H:i:s", strtotime($deviceLogs->created . " +5 minutes"))) < strtotime(date("Y-m-d H:i:s"))) {
+                } else if (strtotime(date("Y-m-d H:i:s", strtotime($deviceLogs->created . " +1 minutes"))) < strtotime(date("Y-m-d H:i:s"))) {
                     $device->status = 0;
                     $device->server_id = NULL;
                     if ($device->save()) {
