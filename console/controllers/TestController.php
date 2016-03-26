@@ -31,7 +31,7 @@ class TestController extends Controller {
                     }
                 } else {
                     $deviceTime = date("Y-m-d H:i:s", strtotime($deviceLogs->created . " +1 minute"));
-                    if (strtotime($deviceTime) > strtotime(date("Y-m-d H:i:s"))) {
+                    if (strtotime($deviceTime) < strtotime(date("Y-m-d H:i:s"))) {
                         $device->status = 0;
                         $device->server_id = NULL;
                         if ($device->save()) {
