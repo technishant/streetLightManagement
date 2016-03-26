@@ -22,7 +22,6 @@ function initialize() {
                         content: "<h5>Device ID - " + this.controller_id + "</h5><table>\n\
                                   <tr><td>IMEI No. - </td><td>" + this.imei_number + "</td></tr>\n\
                                   <tr><td>SIM No. - </td><td>" + this.sim_number + "</td></tr>\n\
-                                  <tr><td>SIM No. - </td><td>" + this.sim_number + "</td></tr>\n\
                                   <tr><td>Current Voltage - </td><td>" + this.logs.current_voltage + " V " + "</td></tr>\n\
                                   <tr><td>Current Load - </td><td>" + this.logs.current_load + " KW "+ "</td></tr>\n\
                                   <tr><td>Voltage Status - </td><td>" + this.logs.voltage_status + "</td></tr>\n\
