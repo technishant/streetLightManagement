@@ -21,7 +21,11 @@ class Helper {
             1 => "Low Voltage",
             2 => "Normal Voltage"
         );
-        return $response[$status];
+        if (in_array($status, array_keys($response))) {
+            return $response[$status];
+        } else {
+            return $status;
+        }
     }
 
     public static function lightStatus($status) {
@@ -29,7 +33,11 @@ class Helper {
             0 => "Off",
             1 => "On",
         );
-        return $response[$status];
+        if (in_array($status, array_keys($response))) {
+            return $response[$status];
+        } else {
+            return $status;
+        }
     }
 
     public static function overloadStatus($status) {
@@ -37,7 +45,11 @@ class Helper {
             0 => "No overload",
             1 => "Overload alert",
         );
-        return $response[$status];
+        if (in_array($status, array_keys($response))) {
+            return $response[$status];
+        } else {
+            return $status;
+        }
     }
 
 }
