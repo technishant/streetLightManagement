@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use backend\models\Devices;
 use backend\models\DeviceLogs;
 use yii\helpers\ArrayHelper;
+use backend\components\Helper;
 
 /**
  * Site controller
@@ -104,9 +105,9 @@ class SiteController extends Controller {
                         $temp['logs'] = [
                             'current_voltage' => $deviceLogs->current_voltage,
                             'current_load' => $deviceLogs->current_load,
-                            'voltage_status' => $deviceLogs->voltage_status,
-                            'light_status' => $deviceLogs->light_status,
-                            'overload_status' => $deviceLogs->overload_status
+                            'voltage_status' => Helper::voltageStatus($deviceLogs->voltage_status),
+                            'light_status' => Helper::lightStatus($deviceLogs->light_status),
+                            'overload_status' => Helper::overloadStatus($deviceLogs->overload_status)
                         ];
                     } else {
                         $temp['logs'] = array();
