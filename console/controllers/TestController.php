@@ -29,19 +29,23 @@ class TestController extends Controller {
                     } else {
                         print_r($device);
                     }
-                } else if (strtotime(date("Y-m-d H:i:s", strtotime($deviceLogs->created . " +1 minutes"))) < strtotime(date("Y-m-d H:i:s"))) {
-                    $device->status = 0;
-                    $device->server_id = NULL;
-                    if ($device->save()) {
-                        echo "Device with id " . $device->controller_id . " Successfully offlined \n";
-                    } else {
-                        print_r($device);
-                    }
                 } else {
-                    echo "Device with id " . $device->controller_id . " is online. \n";
+                    $deviceTime = date("Y-m-d H:i:s", strtotime($deviceLogs->created . " +1 minute"));
+                    if (strtotime($deviceTime) < strtotime(date("Y-m-d H:i:s"))) {
+                        $device->status = 0;
+                        $device->server_id = NULL;
+                        if ($device->save()) {
+                            echo date("Y-m-d H:i:s", strtotime($deviceTime)." = ". date("Y-m-d H:i:s"))."\n";
+                            echo "Device with id " . $device->controller_id . " Successfully offlined \n";
+                        } else {
+                            print_r($device->getErrors());
+                        }
+                    } else {
+                        echo "Device with id " . $device->controller_id . " is Online. \n";
+                    }
                 }
             }
-            sleep(30);
+            sleep(10);
         }
     }
 
