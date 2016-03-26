@@ -100,7 +100,7 @@ class SiteController extends Controller {
                     $temp['sim_number'] = $device->sim_number;
                     $temp['imei_number'] = $device->imei_number;
                     $temp['status'] = $device->status;
-                    $temp['created'] = date("d-m-Y H:i:s", strtotime($device->created));
+                    $temp['created'] = $device->created;
                     $deviceLogs = DeviceLogs::find()->where(['device_id' => $device->id])->orderBy(['id' => SORT_DESC])->one();
                     if (!empty($deviceLogs)) {
                         $temp['logs'] = [
