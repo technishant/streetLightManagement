@@ -28,7 +28,7 @@ function initialize() {
                                   <tr><td>Voltage Status - </td><td>" + this.logs.voltage_status + "</td></tr>\n\
                                   <tr><td>Light Status - </td><td>" + this.logs.light_status + "</td></tr>\n\
                                   <tr><td>Overload Status - </td><td>" + this.logs.overload_status + "</td></tr>\n\
-                                  <tr><td>Synced At - </td><td>" + this.created + "</td></tr>\n\
+                                  <tr><td>Synced At - </td><td>" + this.logs.created + "</td></tr>\n\
                                 </table>",
                         maxWidth: 250
                     });
