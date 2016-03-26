@@ -35,7 +35,7 @@ class TestController extends Controller {
                         $device->status = 0;
                         $device->server_id = NULL;
                         if ($device->save()) {
-                            echo date("Y-m-d H:i:s", strtotime($deviceTime)." = ". date("Y-m-d H:i:s"))."\n";
+                            echo date("Y-m-d H:i:s", strtotime($deviceTime))." = ". date("Y-m-d H:i:s")."\n";
                             echo "Device with id " . $device->controller_id . " Successfully offlined \n";
                         } else {
                             print_r($device->getErrors());
