@@ -13,7 +13,7 @@ function initialize() {
     var map = new google.maps.Map(mapCanvas, mapOptions);
 
     $.ajax({
-        url: 'load-devices-on-map',
+        url: $('#load-devices-on-map').val(),
         success: function (data) {
             if (data.status == 1) {
                 $.each(data.data, function (index, element) {

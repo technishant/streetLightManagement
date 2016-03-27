@@ -22,6 +22,7 @@ AppAsset::register($this);
     </head>
 
     <body>
+        <input type="hidden" id="load-devices-on-map" value="<?= Url::to(['site/load-devices-on-map'])?>">
         <?php $this->beginBody() ?>
         <div id="wrapper">
             <!-- Navigation -->
