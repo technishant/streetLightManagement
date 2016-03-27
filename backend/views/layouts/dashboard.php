@@ -58,21 +58,23 @@ AppAsset::register($this);
                     </li>
                 </ul>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <?php $controller = Yii::$app->controller->id;  ?>
+                <?php $action = Yii::$app->controller->action->id;  ?>
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
-                        <li class="active">
+                        <li class="<?= ($action == 'dashboard') ? 'active' : '' ?>">
                             <a href="<?= Url::to(['site/dashboard']); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
-                        <li>
+                        <li class="<?= ($controller == 'product') ? 'active' : '' ?>">
                             <a href="<?= Url::to(['product/index']); ?>"><i class="fa fa-fw fa-bar-chart-o"></i> Products</a>
                         </li>
-                        <li>
+                        <li class="<?= ($controller == 'region') ? 'active' : '' ?>">
                             <a href="<?= Url::to(['region/index']); ?>"><i class="fa fa-fw fa-table"></i> Regions</a>
                         </li>
-                        <li>
+                        <li class="<?= ($controller == 'product') ? 'devices' : '' ?>">
                             <a href="<?= Url::to(['devices/index']); ?>"><i class="fa fa-fw fa-edit"></i> Devices</a>
                         </li>
-                        <li>
+                        <li class="<?= ($action == 'device-overview') ? 'active' : '' ?>">
                             <a href="<?= Url::to(['site/device-overview']); ?>"><i class="fa fa-fw fa-eye"></i> Device Overview</a>
                         </li>
                     </ul>
