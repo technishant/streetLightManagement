@@ -34,7 +34,7 @@ AppAsset::register($this);
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?= Url::to(['site/dashboard']); ?>"><?= Html::encode('Electrotech India Pvt. Ltd.') ?></a>
+                    <a class="navbar-brand" href="<?= Url::to(['site/dashboard']); ?>"><?= Html::encode('Electro Tech') ?></a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">

@@ -30,11 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'current_voltage',
-                        'value' => 'current_voltage'
+                        'label' => 'Current Voltage (V)'
                     ],
                     [
                         'attribute' => 'current_load',
-                        'value' => 'current_load'
+                        'value' => 'current_load',
+                        'label' => 'Current Voltage (KW)'
                     ],
                     [
                         'attribute' => 'voltage_status',
@@ -49,12 +50,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'overload_status'
                     ],
                     [
-                        'attribute' => 'status',
-                        'value' => 'status'
+                        'attribute' => 'created',
+                        'label' => 'Last Synced'
                     ],
-                ],
-            ]);
-            ?>
+                    [
+                        'attribute' => 'status',
+                        'label' => 'Device Status',
+                        'format' => 'raw',
+                        'value' => function ($row) {
+                            if ($row['status'] == "Online") {
+                                return Html::tag('span', $row['status'], ['class' => 'green']);
+                            } else {
+                                return Html::tag('span', $row['status'], ['class' => 'red']);
+                            }
+                        }
+                            ],
+                        ],
+                    ]);
+                    ?>
 
         </div>
     </div>

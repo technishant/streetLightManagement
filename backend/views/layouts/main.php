@@ -28,7 +28,7 @@ LoginAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Electrotech India Pvt. Ltd.',
+        'brandLabel' => 'Electro Tech',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -60,7 +60,7 @@ LoginAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Electrotech India <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Electro Tech <?= date('Y') ?></p>
 
         <!--<p class="pull-right"><?= Yii::powered() ?></p>-->
     </div>

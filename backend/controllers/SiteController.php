@@ -138,7 +138,7 @@ class SiteController extends Controller {
             $temp['status'] = ($device->status == 1) ? "Online" : "Offline";
             if (!empty($deviceLogs)) {
                 $temp['current_voltage'] = $deviceLogs->current_voltage;
-                $temp['current_load'] = $deviceLogs->current_load;
+                $temp['current_load'] = isset($deviceLogs->current_load) ? $deviceLogs->current_load / 10 : $deviceLogs->current_load;
                 $temp['voltage_status'] = Helper::voltageStatus($deviceLogs->voltage_status);
                 $temp['light_status'] = Helper::lightStatus($deviceLogs->light_status);
                 $temp['overload_status'] = Helper::overloadStatus($deviceLogs->overload_status);
