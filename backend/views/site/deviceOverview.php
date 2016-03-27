@@ -43,31 +43,38 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'light_status',
-                        'value' => 'light_status'
-                    ],
-                    [
-                        'attribute' => 'overload_status',
-                        'value' => 'overload_status'
-                    ],
-                    [
-                        'attribute' => 'created',
-                        'label' => 'Last Synced'
-                    ],
-                    [
-                        'attribute' => 'status',
-                        'label' => 'Device Status',
                         'format' => 'raw',
                         'value' => function ($row) {
-                            if ($row['status'] == "Online") {
-                                return Html::tag('span', $row['status'], ['class' => 'green']);
+                            if ($row['light_status'] == "On") {
+                                return Html::tag('span', $row['light_status'], ['class' => 'green']);
                             } else {
-                                return Html::tag('span', $row['status'], ['class' => 'red']);
+                                return Html::tag('span', $row['light_status'], ['class' => 'red']);
                             }
                         }
                             ],
-                        ],
-                    ]);
-                    ?>
+                            [
+                                'attribute' => 'overload_status',
+                                'value' => 'overload_status'
+                            ],
+                            [
+                                'attribute' => 'created',
+                                'label' => 'Last Synced'
+                            ],
+                            [
+                                'attribute' => 'status',
+                                'label' => 'Device Status',
+                                'format' => 'raw',
+                                'value' => function ($row) {
+                                    if ($row['status'] == "Online") {
+                                        return Html::tag('span', $row['status'], ['class' => 'green']);
+                                    } else {
+                                        return Html::tag('span', $row['status'], ['class' => 'red']);
+                                    }
+                                }
+                                    ],
+                                ],
+                            ]);
+                            ?>
 
         </div>
     </div>
