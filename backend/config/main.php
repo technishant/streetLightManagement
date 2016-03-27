@@ -10,6 +10,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'defaultRoute' => 'site/dashboard',
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
