@@ -117,8 +117,11 @@ class DevicesController extends Controller {
 
     public function actionJunk($device_id) {
         $model = DeviceJunk::find()->where(['device_id' => $device_id])->all();
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            'key' => 'id',
+            'allModels' => $model]);
         return $this->render('junk', [
-                    'model' => $model
+                    'dataProvider' => $dataProvider
         ]);
     }
 

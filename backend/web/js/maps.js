@@ -35,8 +35,11 @@ function initialize() {
                         position: pos,
                         map: map,
                         title: this.controller_id,
-                        icon: (element.status == 0) ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                        animation: google.maps.Animation.DROP,
+                        icon: (this.status == 0 ) ? $('#red-bulb').val() : $('#green-bulb').val()
+                        
                     });
+                    marker.setMap(map);
                     google.maps.event.addListener(marker, 'mouseover', function () {
                         popup.open(map, marker);
                     });
