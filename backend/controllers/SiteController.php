@@ -57,13 +57,9 @@ class SiteController extends Controller {
         ];
     }
 
-    public function actionIndex() {
-        return $this->render('index');
-    }
-
     public function actionLogin() {
         if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['site/dashboard']);
         }
 
         $model = new LoginForm();
@@ -78,12 +74,14 @@ class SiteController extends Controller {
 
     public function actionLogout() {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
     public function actionDashboard() {
         $this->layout = "dashboard";
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']);
+        }
         return $this->render('dashboard');
     }
 
@@ -105,7 +103,7 @@ class SiteController extends Controller {
                     if (!empty($deviceLogs)) {
                         $temp['logs'] = [
                             'current_voltage' => $deviceLogs->current_voltage,
-                            'current_load' => isset($deviceLogs->current_load) ? $deviceLogs->current_load/10 : $deviceLogs->current_load,
+                            'current_load' => isset($deviceLogs->current_load) ? $deviceLogs->current_load / 10 : $deviceLogs->current_load,
                             'voltage_status' => Helper::voltageStatus($deviceLogs->voltage_status),
                             'light_status' => Helper::lightStatus($deviceLogs->light_status),
                             'overload_status' => Helper::overloadStatus($deviceLogs->overload_status),
