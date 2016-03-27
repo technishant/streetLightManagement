@@ -41,14 +41,10 @@ class Helper {
     }
 
     public static function overloadStatus($status) {
-        $response = array(
-            0 => "No overload",
-            1 => "Overload alert",
-        );
-        if (in_array($status, array_keys($response))) {
-            return $response[$status];
+        if ($status == 0) {
+            return "No overload";
         } else {
-            return $status;
+            return "Overload alert";
         }
     }
 
